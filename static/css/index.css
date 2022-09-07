@@ -1,0 +1,13 @@
+.tmb-wrap-table div {
+  display: table-cell;
+  transition: all 0.3s ease;
+  border-bottom: 10px solid transparent;
+  padding-top: 10px;
+  -webkit-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+.tmb-wrap-table div.active {
+  border-color: #fd6158;
+}

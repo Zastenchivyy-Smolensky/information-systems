@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color: skyblue;
+  width: 100%;
+  color: white;
+}
+.header-right {
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  text-align: center;
+}
+
+.header-right li {
+  margin: 5px auto 5px 20px;
+  list-style: none;
+  display: inline;
+  margin: 10px;
+}
+.header-right li:hover {
+  background: tomato;
+  border-radius: 3px;
+}
+
+.header-left {
+  font-size: large;
+}
+.text {
+  line-height: 40px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+a {
+  text-decoration: none;
+}
+main {
+  text-align: center;
+  font-family: serif;
+  letter-spacing: 0.2rem;
+}
+.welcome-fit {
+  background-color: antiquewhite;
+}
+.enjoy-life {
+  background-color: pink;
+}
+.slider {
+  padding: 10px;
+  border: 1px solid #333;
+  background: #f2f2f2;
+}
+img {
+  width: 600px;
+  height: 400px;
+  margin: 50px;
+}
+
+/* 絞り込み機能 */
+section {
+  margin-top: 30px;
+}
+.accordion {
+  width: 800px;
+  margin: 0 auto;
+}
+.menu {
+  background-color: green;
+  color: white;
+  font-size: 20px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+.menu:hover,
+.menu:active,
+.menu.is-active {
+  opacity: 0.5;
+}
+.contents {
+  text-align: center;
+  line-height: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition-duration: 0.4s;
+}
+.contents.is-open {
+  border: 1px solid black;
+  padding: 10px;
+  line-height: normal;
+  height: auto;
+  opacity: 1;
+}
+
+.table ul {
+  margin-top: 100px;
+  margin: 3px auto;
+  margin-left: auto;
+  margin-right: auto;
+}
