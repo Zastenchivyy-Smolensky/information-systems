@@ -104,7 +104,6 @@ section {
 .tabs {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 .tab {
   border: 1px solid #000;
@@ -117,10 +116,12 @@ section {
 }
 .tab:hover {
   cursor: pointer;
+  background-color: #f2f2f2;
 }
 .tab.is-active {
-  background: #000;
-  color: white;
+  opacity: 0.6;
+  font-size: 30px;
+  border-bottom: 5px solid #000;
 }
 
 .contents1 {
