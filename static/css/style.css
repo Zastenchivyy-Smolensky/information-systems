@@ -51,6 +51,45 @@ img {
   margin: 50px;
 }
 
+#modal-bg {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  pointer-events: none;
+}
+#modal-bg.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+#modal-container {
+  position: absolute;
+  top: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+}
+#modal-container.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+#modal-close {
+  width: 320px;
+  margin: 40px auto;
+  border: 1px;
+  border: 1px solid blue;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  margin: 10px auto;
+}
+
 /* 絞り込み機能 */
 section {
   margin-top: 30px;
