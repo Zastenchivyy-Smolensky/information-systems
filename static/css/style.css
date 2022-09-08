@@ -56,7 +56,7 @@ section {
   margin-top: 30px;
 }
 .accordion {
-  width: 800px;
+  width: 400px;
   margin: 0 auto;
 }
 .menu {
@@ -94,4 +94,44 @@ section {
   margin: 3px auto;
   margin-left: auto;
   margin-right: auto;
+}
+
+.box {
+  width: 500px;
+  margin: 100px auto;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tab {
+  border: 1px solid #000;
+  border-bottom: none;
+  padding: 6px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 6px 6px 0 0;
+  width: 30%;
+}
+.tab:hover {
+  cursor: pointer;
+}
+.tab.is-active {
+  background: #000;
+  color: white;
+}
+
+.contents1 {
+  font-size: 16px;
+  text-align: center;
+}
+.contents1 li {
+  list-style: none;
+}
+.contnet1 {
+  text-align: center;
+  padding: 16px;
+  font-size: 16px;
 }

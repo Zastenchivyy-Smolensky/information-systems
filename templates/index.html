@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -20,19 +20,23 @@
   </head>
   <body>
     <header>
-      <div class="header-left">
-        <h1>タイトル</h1>
+      <div class="nav-header">
+        <div class="text">Sample</div>
       </div>
-      <div class="header-right">
-        <ul>
-          <li class="item">
-            <a href="#" class="text" role="button">新規作成</a>
-          </li>
-          <li><a href="#" class="text" role="button">ログイン</a></li>
-          <li>
-            <a href="#" class="text" role="button">新規ユーザー作成</a>
-          </li>
-        </ul>
+      <div class="item">
+        <a href="#">
+          <div class="text">Home</div>
+        </a>
+      </div>
+      <div class="item">
+        <a href="#">
+          <div class="text">Login</div>
+        </a>
+      </div>
+      <div class="item">
+        <a href="#">
+          <div class="text">logout</div>
+        </a>
       </div>
     </header>
     <main>
@@ -46,55 +50,69 @@
       </div>
       <h2 class="enjoy-life">Enjoy Student life</h2>
     </main>
-    <section>
-      <div class="accordion">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <p class="menu js-menu">絞り込み</p>
-        <div class="contents">
-          <div id="search1">
-            <form name="example_form" onsubmit="return false">
-              <div class="search-box">
-                <span class="search-box_label">種類:</span>
-                <input type="radio" name="kind" value="" />ALL
-                <input type="radio" name="kind" value="野菜" />野菜
-                <input type="radio" name="kind" value="果物" />果物
+    <div class="section">
+      <div class="box">
+        <div class="tabs">
+          <div class="tab is-active" data-tab="0">Tab1</div>
+          <div class="tab" data-tab="1">Tab2</div>
+        </div>
+        <div class="contents1">
+          <div class="content1" data-content="0">
+            <section>
+              <div class="accordion">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <p class="menu js-menu">絞り込み</p>
+                <div class="contents">
+                  <div id="search1">
+                    <form name="example_form" onsubmit="return false">
+                      <div class="search-box">
+                        <span class="search-box_label">種類:</span>
+                        <input type="radio" name="kind" value="" />ALL
+                        <input type="radio" name="kind" value="野菜" />野菜
+                        <input type="radio" name="kind" value="果物" />果物
+                      </div>
+                      <div class="search-box">
+                        <span class="search-box_label">色:</span>
+                        <input type="checkbox" name="color" value="赤色" />赤色
+                        <input type="checkbox" name="color" value="緑色" />緑色
+                        <input type="checkbox" name="color" value="黄色" />黄色
+                      </div>
+                      <input
+                        type="text"
+                        name="item"
+                        id="item1"
+                        placeholder="Write your name"
+                        onchange="changeHandler(this)"
+                      />
+                    </form>
+                  </div>
+                </div>
               </div>
-              <div class="search-box">
-                <span class="search-box_label">色:</span>
-                <input type="checkbox" name="color" value="赤色" />赤色
-                <input type="checkbox" name="color" value="緑色" />緑色
-                <input type="checkbox" name="color" value="黄色" />黄色
+              <span id="midashi"></span>
+              <div class="table">
+                <ul class="list">
+                  <li class="list_item" data-kind="野菜" data-color="黄色">
+                    キャベツ 値段:200円
+                  </li>
+                  <li class="list_item" data-kind="野菜" data-color="黄色">
+                    にんじん 値段:100円
+                  </li>
+                  <li class="list_item" data-kind="野菜" data-color="黄色">
+                    牛乳　 値段:178円
+                  </li>
+                  <li class="list_item" data-kind="野菜" data-color="黄色">
+                    もやし　 値段:50円
+                  </li>
+                </ul>
               </div>
-              <input
-                type="text"
-                name="item"
-                id="item1"
-                placeholder="Write your name"
-                onchange="changeHandler(this)"
-              />
-            </form>
+            </section>
           </div>
+          <div class="content1" data-content="1">content1</div>
         </div>
       </div>
-      <span id="midashi"></span>
-    </section>
-    <div class="table">
-      <ul class="list">
-        <li class="list_item" data-kind="野菜" data-color="黄色">
-          キャベツ 値段:200円
-        </li>
-        <li class="list_item" data-kind="野菜" data-color="黄色">
-          にんじん 値段:100円
-        </li>
-        <li class="list_item" data-kind="野菜" data-color="黄色">
-          牛乳　 値段:178円
-        </li>
-        <li class="list_item" data-kind="野菜" data-color="黄色">
-          もやし　 値段:50円
-        </li>
-      </ul>
     </div>
 
+    <script src="{{url_for('static', filename='javascript/tab.js')}}"></script>
     <script src="{{url_for('static', filename='javascript/main.js')}}"></script>
     <script src="{{url_for('static', filename='jquery/main.js')}}"></script>
     <script src="{{url_for('static', filename='jquery/search.js')}}"></script>

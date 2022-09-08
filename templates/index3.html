@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    
-</body>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/index.css')}}"
+    />
+  </head>
+  <body>
+    <h1>hello world</h1>
+    <div class="box">
+      <div class="tabs">
+        <div class="tab is-active" data-tab="0">Tan1</div>
+        <div class="tab" data-tab="1">Tan2</div>
+        <div class="tab" data-tab="2">Tan3</div>
+      </div>
+      <div class="contents">
+        <div class="content" data-content="0">Content1</div>
+        <div class="content" data-content="1">Content2</div>
+        <div class="content" data-content="2">Content3</div>
+      </div>
+    </div>
+    <script src="{{url_for('static', filename='javascript/main1.js')}}"></script>
+  </body>
 </html>
