@@ -1,14 +1,73 @@
-from unicodedata import name
+from crypt import methods
+from wsgiref.handlers import read_environ
 from flask import *
 from flask_fontawesome import FontAwesome
 app = Flask(__name__)
+import os
+import secrets
+from PIL import Image
+from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
+
+app.config["SECRET_KEY"]=secrets.token_hex(16)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///review.db'
+db = SQLAlchemy(app)
+
+UPLOAD_FOLDER = "./static/up"
+ALLOWED_EXTENSIONS = set(['.png', '.jpg',".jpeg"])
+
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    subject = db.Column(db.String(50), nullable=False)#教科名
+    teacher = db.Column(db.String(50), nullable=False)#教員名
+    day = db.Column(db.String(50), nullable=False)#曜日
+    time = db.Column(db.Integer, nullable=False)#開講時間
+    review = db.Column(db.Integer, nullable=False)#開講時間
+    point = db.Column(db.Integer, nullable=True)# 五段階評価
+    pastImage = db.Column(db.String(100), nullable=False)#過去問ファイル
+        
 
 
-@app.route("/")
+@app.route("/",methods=["GET","POST"])
 def index():
-    data = ["kageyama","ryouta","kageyama"]
-    return render_template("index.html", data=data)
+    reviews = Review.query.all()
 
+    data = ["kageyama","ryouta","kageyama"]
+    return render_template("base.html", reviews=reviews)
+
+@app.route("/add", methods=["POST"])
+def add():
+    if request.method == "POST":
+        form_subject = request.form.get("subject")
+        form_teacher = request.form.get("teacher")
+        form_day = request.form.get("day")
+        form_time = request.form.get("time")
+        form_reivew=request.form.get("review")
+        form_point = request.form.get("point")
+        form_pastImage=request.files["pastImage"]
+        _, ext = os.path.splitext(form_pastImage.filename)
+        ext = ext.lower()
+        if ext and ext in ALLOWED_EXTENSIONS:
+            new_image = secrets.token_urlsafe(16) + ext.lower()
+            i = Image.open(form_pastImage)
+            i.thumbnail((200, 200))
+            i.save(os.path.join(UPLOAD_FOLDER, new_image))
+        review = Review(
+            subject = form_subject,
+            teacher = form_teacher,
+            day = form_day,
+            time = form_time,
+            review = form_reivew,
+            point = form_point,
+            pastImage = new_image
+        )
+        db.session.add(review)
+        db.session.commit()
+        return redirect(url_for("index"))
+@app.route("/show/<int:id>")
+def show(id):
+    review = Review.query.get(id)
+    return render_template("app/show.html", review=review)
 
 @app.route("/search",methods=["POST"])
 def search():
@@ -23,6 +82,3 @@ def search():
     }
     return jsonify(values=json.dumps(return_json))
 
-@app.route("/test")
-def test():
-    return render_template("index2.html")

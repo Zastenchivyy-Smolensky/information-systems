@@ -51,6 +51,16 @@
               <li class="list_item" data-kind="野菜" data-color="黄色">
                 もやし　 値段:50円
               </li>
+              <h2>強化一覧</h2>
+              {% for review in reviews %}
+              <div class="card" style="width: 18rem">
+                <div class="card-body">
+                  <h5 class="card-title">{{review.subject }}</h5>
+                  <p class="card-text">{{review.teacher}}</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              {% endfor %}
             </ul>
           </div>
         </section>
