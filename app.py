@@ -69,6 +69,32 @@ def show(id):
     review = Review.query.get(id)
     return render_template("app/show.html", review=review)
 
+@app.route("/edit/<int:id>" ,methods=["GET","POST"])
+def edit(id):
+    review = Review.query.get(id)
+    return render_template("app/edit.html", review=review)
+
+@app.route("/update/<int:id>/", methods=["POST"])
+def update(id):
+    review = Review.query.get(id)
+    review.subject = request.form.get("subject")
+    review.teacher = request.form.get("teacher")
+    review.day = request.form.get("day")
+    review.time = request.form.get("time")
+    review.reivew=request.form.get("review")
+    review.point = request.form.get("point")
+    review.pastImage=request.files["pastImage"]
+    db.session.merge(review)
+    db.session.commit()
+    return redirect(url_for("index"))
+
+@app.route("/review/<int:id>/delete", methods=["POST"])
+def delete(id):
+    review = Review.query.get(id)
+    db.session.delete(review)
+    db.session.commit()
+    return redirect(url_for("index"))
+
 @app.route("/search",methods=["POST"])
 def search():
     item = request.form["item"]

@@ -11,4 +11,7 @@
   <p>{{review.point}}</p>
   <img src="static/up/{{review.pastImage}}" alt="" />
 </div>
+<form action="{{url_for('delete', id=review.id)}}" method="POST">
+  <input type="submit" value="削除" />
+</form>
 {% endblock %}

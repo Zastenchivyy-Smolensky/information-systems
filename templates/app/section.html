@@ -57,7 +57,11 @@
                 <div class="card-body">
                   <h5 class="card-title">{{review.subject }}</h5>
                   <p class="card-text">{{review.teacher}}</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                  <a
+                    href="{{url_for('show',id=review.id)}}"
+                    class="btn btn-primary"
+                    >詳細ページ</a
+                  >
                 </div>
               </div>
               {% endfor %}

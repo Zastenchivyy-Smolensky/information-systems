@@ -1,0 +1,31 @@
+<div class="container mt-4">
+  <h2>編集画面</h2>
+  <form action="{{url_for('update', id=review.id)}}" method="post">
+    <input
+      name="subject"
+      placeholder="教科名"
+      value="{{review.subject}}"
+    /><br />
+    <input
+      name="teacher"
+      placeholder="担当教員"
+      value="{{review.teacher}}"
+    /><br />
+    <input name="day" placeholder="開講曜日" value="{{review.day}}" /><br />
+    <input
+      type="number"
+      name="time"
+      placeholder="時間"
+      value="{{review.time}}"
+    /><br />
+    <input name="review" placeholder="口コミ" value="{{review.review}}" /><br />
+    <input
+      type="number"
+      name="point"
+      placeholder="点数"
+      value="{{review.point}}"
+    /><br />
+    <input type="file" name="pastImage" value="review.pastImage" /><br />
+    <button class="btn btn-primary">従業員増加</button>
+  </form>
+</div>
