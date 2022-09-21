@@ -1,6 +1,10 @@
 <div class="container mt-4">
   <h2>編集画面</h2>
-  <form action="{{url_for('update', id=review.id)}}" method="post">
+  <form
+    action="{{url_for('update', id=review.id)}}"
+    method="post"
+    enctype="multipart/form-data"
+  >
     <input
       name="subject"
       placeholder="教科名"
@@ -25,7 +29,7 @@
       placeholder="点数"
       value="{{review.point}}"
     /><br />
-    <input type="file" name="pastImage" value="review.pastImage" /><br />
+    <input type="file" name="pastImage" value="{{review.pastImage}}" /><br />
     <button class="btn btn-primary">従業員増加</button>
   </form>
 </div>

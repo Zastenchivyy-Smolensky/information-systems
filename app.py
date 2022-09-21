@@ -7,7 +7,6 @@ import os
 import secrets
 from PIL import Image
 from flask_sqlalchemy import SQLAlchemy
-from flask_wtf.csrf import CSRFProtect
 
 app.config["SECRET_KEY"]=secrets.token_hex(16)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///review.db'
@@ -84,6 +83,8 @@ def update(id):
     review.reivew=request.form.get("review")
     review.point = request.form.get("point")
     review.pastImage=request.files["pastImage"]
+    review.pastImage.save(os.path.join("./static/up/",review.pastImage.filename))
+    review.pastImage = review.pastImage.filename
     db.session.merge(review)
     db.session.commit()
     return redirect(url_for("index"))
