@@ -51,20 +51,36 @@
               <li class="list_item" data-kind="野菜" data-color="黄色">
                 もやし　 値段:50円
               </li>
-              <h2>強化一覧</h2>
-              {% for review in reviews %}
-              <div class="card" style="width: 18rem">
-                <div class="card-body">
-                  <h5 class="card-title">{{review.subject }}</h5>
-                  <p class="card-text">{{review.teacher}}</p>
-                  <a
-                    href="{{url_for('show',id=review.id)}}"
-                    class="btn btn-primary"
-                    >詳細ページ</a
-                  >
-                </div>
+              <div class="container mt-4">
+                <h2>教科一覧</h2>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">教科名</th>
+                      <th scope="col">教員名</th>
+                      <th scope="col">曜日</th>
+                      <th scope="col">開講時間</th>
+                      <th scope="col">五段階評価</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for review in reviews %}
+                      <th scope="row">{{review.id}}</th>
+                      <td>
+                        <a class="text-decoration-none" href="{{url_for('show', id=review.id)}}">
+                          {{review.subject}}
+                        </a>
+                      </td>
+                      <td>{{review.teacher}}</td>
+                      <td>{{review.day}}</td>
+                      <td>{{review.time}}</td>
+                      <td>{{review.point}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
               </div>
-              {% endfor %}
             </ul>
           </div>
         </section>

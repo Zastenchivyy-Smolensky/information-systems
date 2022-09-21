@@ -21,7 +21,7 @@ class Review(db.Model):
     teacher = db.Column(db.String(50), nullable=False)#教員名
     day = db.Column(db.String(50), nullable=False)#曜日
     time = db.Column(db.Integer, nullable=False)#開講時間
-    review = db.Column(db.Integer, nullable=False)#開講時間
+    review = db.Column(db.Integer, nullable=False)#レビュー
     point = db.Column(db.Integer, nullable=True)# 五段階評価
     pastImage = db.Column(db.String(100), nullable=False)#過去問ファイル
         
@@ -44,13 +44,8 @@ def add():
         form_reivew=request.form.get("review")
         form_point = request.form.get("point")
         form_pastImage=request.files["pastImage"]
-        _, ext = os.path.splitext(form_pastImage.filename)
-        ext = ext.lower()
-        if ext and ext in ALLOWED_EXTENSIONS:
-            new_image = secrets.token_urlsafe(16) + ext.lower()
-            i = Image.open(form_pastImage)
-            i.thumbnail((200, 200))
-            i.save(os.path.join(UPLOAD_FOLDER, new_image))
+        form_pastImage.save(os.path.join("./static/up/",form_pastImage.filename))
+        new_image = form_pastImage.filename
         review = Review(
             subject = form_subject,
             teacher = form_teacher,
@@ -62,6 +57,7 @@ def add():
         )
         db.session.add(review)
         db.session.commit()
+        flash("投稿しました")
         return redirect(url_for("index"))
 @app.route("/show/<int:id>")
 def show(id):

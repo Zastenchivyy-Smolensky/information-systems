@@ -31,8 +31,8 @@
     ></script>
   </head>
   <body>
-    {% include "app/header.html" %} {%- block content %}{% endblock %} {%
-    include "app/main.html" %} {% include "app/section.html" %}
+    {% include "app/header.html" %} {% include "app/main.html" %} {% include
+    "app/section.html" %} {% block content %}{% endblock %}
 
     <script src="{{url_for('static', filename='javascript/tab.js')}}"></script>
     <script src="{{url_for('static', filename='javascript/modal.js')}}"></script>
