@@ -1,0 +1,38 @@
+<header>
+  <div class="nav-header">
+    <a href="{{url_for('index')}}">
+      <div class="text" id="btn">情報システム工学科1年生向け口コミアプリ</div>
+    </a>
+    <div id="cancel"></div>
+  </div>
+  {% if current_user.is_authenticated %}
+  <div class="item">
+    <a href="#">
+      <div class="text" id="modal-open">新規作成</div>
+    </a>
+    <div id="modal-bg"></div>
+    <div id="modal-container">
+      {% include "app/modal.html" %}
+      <div id="modal-close">閉じる</div>
+    </div>
+  </div>
+  {%endif%} {% if not current_user.is_authenticated %}
+  <div class="item">
+    <a href="{{url_for('auth.login')}}">
+      <div class="text">Login</div>
+    </a>
+  </div>
+  {% endif %} {% if current_user.is_authenticated %}
+  <div class="item">
+    <a href="{{url_for('.profile')}}">
+      <div class="text">mypage</div>
+    </a>
+  </div>
+  {% endif %} {% if current_user.is_authenticated %}
+  <div class="item">
+    <a href="{{url_for('auth.logout')}}">
+      <div class="text">logout</div>
+    </a>
+  </div>
+  {%endif%}
+</header>

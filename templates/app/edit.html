@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+    crossorigin="anonymous"
+  />
+  <link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/style.css') }}"
+/>
+  </head>
+  <body>
+    {% include "app/header.html" %}
+
+    <div class="container mt-4">
+      <h2>編集画面</h2>
+      <form
+        action="{{url_for('update', id=review.id)}}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <input
+          name="subject"
+          placeholder="教科名"
+          value="{{review.subject}}"
+        /><br />
+        <input
+          name="teacher"
+          placeholder="担当教員"
+          value="{{review.teacher}}"
+        /><br />
+        <input name="day" placeholder="開講曜日" value="{{review.day}}" /><br />
+        <input
+          type="number"
+          name="time"
+          placeholder="時間"
+          value="{{review.time}}"
+        /><br />
+        <input
+          name="review"
+          placeholder="口コミ"
+          value="{{review.review}}"
+        /><br />
+        <input
+          type="number"
+          name="point"
+          placeholder="点数"
+          value="{{review.point}}"
+        /><br />
+        <input
+          type="file"
+          name="pastImage"
+          value="{{review.pastImage}}"
+        /><br />
+        <button class="btn btn-primary">更新する</button>
+      </form>
+    </div>
+  </body>
+</html>
+</body>
+</html>
