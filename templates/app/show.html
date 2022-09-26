@@ -21,6 +21,7 @@
     <div class="container mt-4">
       <h1>詳細ページ</h1>
       <div class="col-3">
+        {% if current_user.is_authenticated %}
         <a
           href="{{url_for('edit', id=review.id)}}"
           role="button"
@@ -30,6 +31,7 @@
         <form action="{{url_for('delete', id=review.id)}}" method="POST">
           <input class="btn btn-danger btn-sm" type="submit" value="削除" />
         </form>
+        {% endif %}
       </div>
       <h2>{{review.subject}}</h2>
       <p>{{review.teacher}}</p>
@@ -43,5 +45,6 @@
     </div>
   </body>
 </html>
+<script src="{{url_for('static', filename='javascript/modal.js')}}"></script>
 </body>
 </html>

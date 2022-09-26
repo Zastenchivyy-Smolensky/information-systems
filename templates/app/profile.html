@@ -9,10 +9,32 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
     />
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/profile.css')}}"
+    />
   </head>
   <body>
     {% include "app/header.html" %}
-    <h1>hello world</h1>
-    {{name}} さんですね!
+    <div class="profile-h1">
+      <h1>{{user.name}} さんですね!</h1>
+      <div class="profile">
+        <img
+          src="{{url_for('static', filename='images/ダウンロード.png')}}"
+          alt=""
+        />
+        <div class="name">{{user.name}}</div>
+        <div class="comment">
+          ここに簡単な自己紹介が入ります。ここに簡単な自己紹介が入ります。ここに簡単な自己紹介が入ります。ここに簡単な自己紹介が入ります。
+        </div>
+      </div>
+    </div>
+    <a
+      href="{{url_for('profile_edit', id=user.id)}}"
+      role="button"
+      class="btn btn-outline-primary"
+      >編集</a
+    >
+    <script src="{{url_for('static', filename='javascript/modal.js')}}"></script>
   </body>
 </html>

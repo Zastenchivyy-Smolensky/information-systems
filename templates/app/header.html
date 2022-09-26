@@ -1,4 +1,4 @@
-<header>
+<header style="text-decoration: none">
   <div class="nav-header">
     <a href="{{url_for('index')}}">
       <div class="text" id="btn">情報システム工学科1年生向け口コミアプリ</div>
@@ -7,9 +7,7 @@
   </div>
   {% if current_user.is_authenticated %}
   <div class="item">
-    <a href="#">
-      <div class="text" id="modal-open">新規作成</div>
-    </a>
+    <div class="text" id="modal-open" style="cursor: pointer">新規作成</div>
     <div id="modal-bg"></div>
     <div id="modal-container">
       {% include "app/modal.html" %}
