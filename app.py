@@ -2,6 +2,7 @@ from flask import *
 app = Flask(__name__)
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin,LoginManager,login_required, current_user
+from werkzeug.security import generate_password_hash
 import os
 import secrets
 app.config["SECRET_KEY"]=secrets.token_hex(16)
@@ -32,17 +33,23 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
     userimage = db.Column(db.String(100))
+    comment = db.Column(db.String(1000))
+
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+
 @app.route("/",methods=["GET","POST"])
 def index():
+
     reviews = Review.query.all()
     return render_template("base.html", reviews=reviews)
 
 @app.route("/add", methods=["POST"])
+@login_required
 def add():
     if request.method == "POST":
         form_subject = request.form.get("subject")
@@ -67,17 +74,22 @@ def add():
         db.session.commit()
         flash("投稿しました")
         return redirect(url_for("index"))
+
 @app.route("/show/<int:id>")
+@login_required
 def show(id):
     review = Review.query.get(id)
     return render_template("app/show.html", review=review)
 
 @app.route("/edit/<int:id>" ,methods=["GET","POST"])
+@login_required
 def edit(id):
     review = Review.query.get(id)
     return render_template("app/edit.html", review=review)
 
+
 @app.route("/update/<int:id>/", methods=["POST"])
+@login_required
 def update(id):
     review = Review.query.get(id)
     review.subject = request.form.get("subject")
@@ -94,17 +106,12 @@ def update(id):
     return redirect(url_for("index"))
 
 @app.route("/review/<int:id>/delete", methods=["POST"])
+@login_required
 def delete(id):
     review = Review.query.get(id)
     db.session.delete(review)
     db.session.commit()
     return redirect(url_for("index"))
-
-@app.route("/profile")
-def profile():
-    name=current_user.name
-    return render_template("app/profile.html", name=name)
-
 
 @app.route("/search",methods=["POST"])
 def search():
@@ -121,3 +128,30 @@ def search():
 
 from .auth import auth
 app.register_blueprint(auth)
+
+@app.route("/profile")
+@login_required
+def profile():
+    user=current_user
+    return render_template("app/profile.html", user=user)
+
+@app.route("/profile/edit/<int:user_id>")
+def profile_edit(user_id):
+    user = User.query.get(user_id)
+    return render_template("app/profile_edit.html", user=user)
+
+
+@app.route("/profile/update/<int:user_id>", methods=["POST"])
+def profile_update(user_id):
+    user = User.query.get(user_id)
+    user.name = request.form.get("name")
+    user.email = request.form.get("email")
+    user.password = request.form.get("password")
+    user.userimage=request.files["userimage"]
+    user.comment = request.form.get("comment")
+    user.password=generate_password_hash(user.password, method="sha256")
+    user.userimage.save(os.path.join("./static/user/",user.userimage.filename))
+    user.userimage = user.userimage.filename
+    db.session.merge(user)
+    db.session.commit()
+    return redirect(url_for("profile"))

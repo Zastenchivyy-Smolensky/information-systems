@@ -1,0 +1,24 @@
+.profile-h1 {
+  text-align: center;
+}
+.profile {
+  background: #fff;
+  width: 300px;
+  padding: 2rem;
+  border: 1px solid #1a1a1a;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+  display: block;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+.name {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 1px auto 1px;
+  letter-spacing: 1px;
+}

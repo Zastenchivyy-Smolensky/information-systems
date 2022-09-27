@@ -20,9 +20,15 @@
       <div class="text">Login</div>
     </a>
   </div>
+  {%endif%} {% if not current_user.is_authenticated %}
+  <div class="item">
+    <a href="{{url_for('auth.signup')}}">
+      <div class="text">Signup</div>
+    </a>
+  </div>
   {% endif %} {% if current_user.is_authenticated %}
   <div class="item">
-    <a href="{{url_for('.profile')}}">
+    <a href="{{url_for('profile')}}">
       <div class="text">mypage</div>
     </a>
   </div>

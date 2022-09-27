@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager,login_user,logout_user
@@ -18,7 +17,6 @@ def login():
         remember = True if request.form.get("remember") else False
         user = User.query.filter_by(email=email).first()
         if not user or not check_password_hash(user.password, password):
-
             return redirect(url_for("auth.login"))
         login_user(user, remember=remember)
         return redirect(url_for('profile'))

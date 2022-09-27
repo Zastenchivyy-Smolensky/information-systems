@@ -19,18 +19,20 @@
     <div class="profile-h1">
       <h1>{{user.name}} さんですね!</h1>
       <div class="profile">
+        {% if not current_user.userimage %}
         <img
-          src="{{url_for('static', filename='images/ダウンロード.png')}}"
-          alt=""
+          src="{{url_for('static', filename='default-image/user.png')}}"
+          alt="ユーザ画像"
         />
+        {% else %}
+        <img src="/static/user/{{user.userimage}}" alt="" />
+        {% endif %}
         <div class="name">{{user.name}}</div>
-        <div class="comment">
-          ここに簡単な自己紹介が入ります。ここに簡単な自己紹介が入ります。ここに簡単な自己紹介が入ります。ここに簡単な自己紹介が入ります。
-        </div>
+        <div class="comment">{{user.comment}}</div>
       </div>
     </div>
     <a
-      href="{{url_for('profile_edit', id=user.id)}}"
+      href="{{url_for('profile_edit', user_id=user.id)}}"
       role="button"
       class="btn btn-outline-primary"
       >編集</a
