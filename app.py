@@ -26,6 +26,7 @@ class Review(db.Model):
     review = db.Column(db.Integer, nullable=False)#レビュー
     point = db.Column(db.Integer, nullable=True)# 五段階評価
     pastImage = db.Column(db.String(100), nullable=False)#過去問ファイル
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"),nullable=False)
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
@@ -34,7 +35,8 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(1000))
     userimage = db.Column(db.String(100))
     comment = db.Column(db.String(1000))
-
+    reivews = db.relationship("Review", backref="user",
+                            lazy="dynamic", cascade="delete")
 
 
 @login_manager.user_loader
@@ -45,30 +47,32 @@ def load_user(user_id):
 @app.route("/",methods=["GET","POST"])
 def index():
 
-    reviews = Review.query.all()
+    reviews = Review.query.join(User).all()
     return render_template("base.html", reviews=reviews)
 
 @app.route("/add", methods=["POST"])
 @login_required
 def add():
     if request.method == "POST":
-        form_subject = request.form.get("subject")
-        form_teacher = request.form.get("teacher")
-        form_day = request.form.get("day")
-        form_time = request.form.get("time")
-        form_reivew=request.form.get("review")
-        form_point = request.form.get("point")
-        form_pastImage=request.files["pastImage"]
-        form_pastImage.save(os.path.join("./static/up/",form_pastImage.filename))
-        new_image = form_pastImage.filename
+        user = User.query.filter_by(id=current_user.id).all()[0]
+        user.subject = request.form.get("subject")
+        user.teacher = request.form.get("teacher")
+        user.day = request.form.get("day")
+        user.time = request.form.get("time")
+        user.review=request.form.get("review")
+        user.point = request.form.get("point")
+        user.pastImage=request.files["pastImage"]
+        user.pastImage.save(os.path.join("./static/up/",user.pastImage.filename))
+        new_image = user.pastImage.filename
         review = Review(
-            subject = form_subject,
-            teacher = form_teacher,
-            day = form_day,
-            time = form_time,
-            review = form_reivew,
-            point = form_point,
-            pastImage = new_image
+            subject = user.subject,
+            teacher = user.teacher,
+            day = user.day,
+            time = user.time,
+            review = user.review,
+            point = user.point,
+            pastImage = new_image,
+            user_id = user.id
         )
         db.session.add(review)
         db.session.commit()
@@ -125,7 +129,7 @@ def search():
     }
     return jsonify(values=json.dumps(return_json))
 
-from .auth import auth
+from auth import auth
 app.register_blueprint(auth)
 
 @app.route("/profile")
