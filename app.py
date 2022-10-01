@@ -76,7 +76,6 @@ def add():
         return redirect(url_for("index"))
 
 @app.route("/show/<int:id>")
-@login_required
 def show(id):
     review = Review.query.get(id)
     return render_template("app/show.html", review=review)
