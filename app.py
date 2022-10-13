@@ -29,7 +29,7 @@ class Review(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"),nullable=False)
 
 class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
@@ -46,7 +46,6 @@ def load_user(user_id):
 
 @app.route("/",methods=["GET","POST"])
 def index():
-
     reviews = Review.query.join(User).all()
     return render_template("base.html", reviews=reviews)
 
@@ -116,26 +115,35 @@ def delete(id):
     db.session.commit()
     return redirect(url_for("index"))
 
-@app.route("/search",methods=["POST"])
-def search():
-    item = request.form["item"]
-    items = [("キャベツ",200),("にんじん",100),("牛乳",178),("もやし",50)]
-    price="未登録"
-    for row in items:
-        if row[0] == item:
-            price = str(row[1])+"円"
-    return_json={
-        "message":'<p>「{0}」は{1}です。</p>'.format(item, price)
-    }
-    return jsonify(values=json.dumps(return_json))
+# @app.route("/search",methods=["POST"])
+# def search():
+#     item = request.form["item"]
+#     items = [("キャベツ",200),("にんじん",100),("牛乳",178),("もやし",50)]
+#     price="未登録"
+#     for row in items:
+#         if row[0] == item:
+#             price = str(row[1])+"円"
+#     return_json={
+#         "message":'<p>「{0}」は{1}です。</p>'.format(item, price)
+#     }
+#     return jsonify(values=json.dumps(return_json))
 
+
+@app.route("/search", methods=['GET','POST'])
+def search():
+    if request.method == "GET":
+        return render_template("app/search.html")
+    if request.method == "POST":
+        subject = request.form["subject"]
+        review = Review.query.join(User).filter(Review.subject==subject).first().subject
+        return render_template("app/search.html", review=review)
 from auth import auth
 app.register_blueprint(auth)
 
-@app.route("/profile")
+@app.route("/profile/<int:user_id>")
 @login_required
-def profile():
-    user=current_user
+def profile(user_id):
+    user = User.query.get(user_id)
     return render_template("app/profile.html", user=user)
 
 @app.route("/profile/edit/<int:user_id>")
@@ -157,4 +165,5 @@ def profile_update(user_id):
     user.userimage = user.userimage.filename
     db.session.merge(user)
     db.session.commit()
-    return redirect(url_for("profile"))
+    return redirect(url_for("profile",user_id=user.id))
+
