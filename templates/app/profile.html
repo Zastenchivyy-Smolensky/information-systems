@@ -16,27 +16,45 @@
   </head>
   <body>
     {% include "app/header.html" %}
-    <div class="profile-h1">
-      <h1>{{user.name}} さんですね!</h1>
-      <div class="profile">
-        {% if not current_user.userimage %}
-        <img
-          src="{{url_for('static', filename='default-image/user.png')}}"
-          alt="ユーザ画像"
-        />
-        {% else %}
-        <img src="/static/user/{{user.userimage}}" alt="" />
+    <div class="wrap">
+      <div class="content">
+        <h1 class="heading-lv1 text-center">
+          {{user.name}} さんのプロフィール画面です
+        </h1>
+        <figure class="profile-image">
+          {% if not current_user.userimage %}
+          <img
+            src="{{url_for('static', filename='default-image/user.png')}}"
+            alt="ユーザ画像"
+            width="300"
+            height="300"
+          />
+          {% else %}
+          <img
+            src="/static/user/{{user.userimage}}"
+            alt=""
+            class="300"
+            height="300"
+          />
+          {% endif %}
+        </figure>
+        <h2 class="heading-lv2 text-center">{{user.name}}</h2>
+        <h3 class="heading-lv3 text-center">自己紹介</h3>
+        <p class="text-center">{{user.comment}}</p>
+        <p class="text text-center">
+          <a href="{{url_for('index')}}">メインページ</a>
+        </p>
+        {% if current_user.is_authenticated %}
+        <a
+          href="{{url_for('profile_edit', user_id=user.id)}}"
+          role="button"
+          class="btn btn-outline-primary"
+          >編集</a
+        >
+
         {% endif %}
-        <div class="name">{{user.name}}</div>
-        <div class="comment">{{user.comment}}</div>
       </div>
     </div>
-    <a
-      href="{{url_for('profile_edit', user_id=user.id)}}"
-      role="button"
-      class="btn btn-outline-primary"
-      >編集</a
-    >
     <script src="{{url_for('static', filename='javascript/modal.js')}}"></script>
   </body>
 </html>

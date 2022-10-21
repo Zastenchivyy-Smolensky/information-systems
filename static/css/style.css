@@ -182,3 +182,13 @@ section {
   width: 96px;
   height: 65px;
 }
+
+.good-btn:hover {
+  color: pink;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.good-btn-active {
+  color: red;
+}

@@ -11,15 +11,16 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
     crossorigin="anonymous"
   />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  
-  <link href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" rel="stylesheet">
-
-
+  <link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/style.css') }}"
+/>
   <link rel="stylesheet" href="{{url_for('static', filename='css/show.css')}}">
   </head>
+  <!-- 高尾くんお願いします -->
   <body>
-    <div class="container">
+    {% include "app/header.html" %}
+    <div class="container mt-4">
       <h1>詳細ページ</h1>
       <div class="col-3">
         {% if current_user.is_authenticated == review.user_id %}
@@ -35,24 +36,18 @@
         {% endif %}
       </div>
       <h2>{{review.subject}}</h2>
-      <p class = "teacher">{{review.teacher}}先生</p>
-      開校日時:<p class = "day">{{review.day}}</p>
-      時間:<p class = "time">{{review.time}}時限目</p>
-      口コミ<p class = "review">{{review.review}}</p>
-      <p class = "point">点数:{{review.point}}点</p>
-      <p class = "use_name">ユーザ名:{{review.user.name}}</p>
-      {% if current_user.is_authenticated %}
-      {% if review.good %}
-        <i class="far fa-heart good-btn good-btn-active" data-review_id="{{review.id}}"></i>
-      {% else %}
-        <i class="far fa-heart good-btn" data-review_id="{{review.id}}"></i>
-      {% endif %}
-    {% endif %}
-    <img src="/static/up/{{review.pastImage}}" alt="" />
+      <p>{{review.teacher}}</p>
+      <p>{{review.subject}}</p>
+      <p>{{review.teacher}}</p>
+      <p>{{review.day}}</p>
+      <p>{{review.time}}</p>
+      <p>{{review.review}}</p>
+      <p>{{review.point}}</p>
+      <p>ユーザ名:テスト</p>
+      <img src="/static/up/{{review.pastImage}}" alt="" />
     </div>
   </body>
 </html>
 <script src="{{url_for('static', filename='javascript/modal.js')}}"></script>
-<script src="{{url_for('static', filename='javascript/good.js')}}"></script>
 </body>
 </html>

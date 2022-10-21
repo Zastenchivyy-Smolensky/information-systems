@@ -12,7 +12,11 @@
             <p class="menu js-menu">絞り込み</p>
             <div class="contents">
               <div id="search1">
-                <form name="example_form" onsubmit="return false">
+                <form action="search" method="POST">
+                  <input id="search2" type="text" name="subject">
+                  <input class="btn2" type="submit" value="検索">
+                </form>
+                <!-- <form name="example_form" onsubmit="return false">
                   <div class="search-box">
                     <span class="search-box_label">種類:</span>
                     <input type="radio" name="kind" value="" />ALL
@@ -32,7 +36,7 @@
                     placeholder="Write your name"
                     onchange="changeHandler(this)"
                   />
-                </form>
+                </form> -->
               </div>
             </div>
           </div>
@@ -50,6 +54,7 @@
                       <th scope="col">曜日</th>
                       <th scope="col">開講時間</th>
                       <th scope="col">五段階評価</th>
+                      <th scope="col">ユーザ名</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -64,10 +69,18 @@
                       <td>{{review.day}}</td>
                       <td>{{review.time}}</td>
                       <td>{{review.point}}</td>
+                      <td>
+                        <a href="{{url_for('profile', user_id=review.user_id)}}">
+                          {{review.user.name}}
+                        </a>
+                      </td>
                     </tr>
                     {% endfor %}
-                  </tbody>
-                </table>
+                </tbody>
+              </table>
+              {% if not reviews %}
+              <p>データがありません</p>
+              {% endif %}
               </div>
             </ul>
           </div>

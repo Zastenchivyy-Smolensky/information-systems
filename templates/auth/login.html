@@ -1,38 +1,29 @@
-<div class="column is-4 is-offset-4">
-  <h3 class="title">Login</h3>
-  <div class="box">
-    <form method="POST" action="login">
-      <div class="field">
-        <div class="control">
-          <input
-            class="input is-large"
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            autofocus=""
-          />
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/login.css')}}"
+    />
+  </head>
+  <body>
+    <div>
+      <div class="login">
+        <div class="login-triangle"></div>
+        <h3 class="login-header">Login</h3>
+        <form method="POST" action="login" class="login-container">
+          <p><input type="email" name="email" placeholder="Email" /></p>
+          <p>
+            <input type="password" name="password" placeholder="パスワード" />
+          </p>
+          <p><input type="submit" value="Log in" /></p>
+        </form>
+        <a class="return" href="{{url_for('index')}}">戻る</a>
       </div>
-
-      <div class="field">
-        <div class="control">
-          <input
-            class="input is-large"
-            type="password"
-            name="password"
-            placeholder="Your Password"
-          />
-        </div>
-      </div>
-      <div class="field">
-        <label class="checkbox">
-          <input type="checkbox" />
-          Remember me
-        </label>
-      </div>
-      <button class="button is-block is-info is-large is-fullwidth">
-        Login
-      </button>
-    </form>
-  </div>
-</div>
+    </div>
+  </body>
+</html>

@@ -1,5 +1,132 @@
-/*
-reviewの詳細ページのデザイン,レイアウトをお願いします.
-全体のデザインは高尾くんにお任せします.
-高尾くんお願いします.
-*/
+.container {
+  font-size: 40;
+  background-color: aquamarine;
+}
+
+img {
+  height: 250px;
+}
+
+.col-3 {
+  font-size: 40px;
+}
+
+.teacher {
+  font-family: "HGP教科書体";
+  font-size: 40px;
+}
+
+.day {
+  color: #c33;
+}
+
+h1 {
+  position: relative;
+  margin: 0 20px 0 20px;
+  padding: 10px 15px;
+  font: bold 22px/1.2 Arial, Helvetica, sans-serif;
+  color: #fff;
+  background: #c33;
+}
+
+h1:before {
+  content: "<";
+  position: absolute;
+  top: middle;
+  left: -10px;
+  width: 0;
+  height: 0;
+  font-size: 25px;
+  line-height: 1;
+  color: #c96;
+}
+h1:after {
+  content: " ";
+  position: absolute;
+  top: -2px;
+  left: -10px;
+  width: 0;
+  height: 130%;
+  border: #600 solid 2px;
+  border-radius: 2px;
+  transform: rotate(-2deg);
+}
+
+h2 {
+  position: relative;
+  margin: 0 15px;
+  padding: 10px 20px;
+  font: bold 24px/1.6 Arial, Helvetica, sans-serif;
+  color: #333;
+  border: #333 solid 3px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: -7px -5px 0 0 #e8e8e8 inset, 2px 3px 0 0 #000;
+}
+h2:before {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 14px;
+  width: 0;
+  height: 0;
+  border-width: 0px;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: #333;
+}
+
+h2:after {
+  content: " ";
+  position: absolute;
+  bottom: -27px;
+  left: 18px;
+  width: 0;
+  height: 0;
+  border-width: 0px;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: #e8e8e8;
+}
+
+.review {
+  position: relative;
+  margin: 0 22px 0 10px;
+  padding: 14px 15px 0px 20px;
+  font: normal 24px/1.3 serif;
+  color: #009;
+  background: #ffc;
+  box-shadow: 12px 0 0 0 #ffc, 0 12px 0 0 #ffc,
+    1px 15px 4px -3px rgba(0, 0, 0, 0.2);
+}
+
+.review:before {
+  margin-top: 10px;
+  position: absolute;
+  top: 100%;
+  left: 100%;
+  width: 0;
+  height: 0;
+  border-width: 12px 12px 0 0;
+  border-style: solid;
+  border-color: transparent;
+  border-top-color: #cc9;
+}
+
+.review:after {
+  content: " ";
+  position: absolute;
+  padding: 0 20px;
+  bottom: 0;
+  left: 10px;
+  width: 120px;
+  height: 20px;
+  background: rgba(255, 182, 182, 0.4);
+  -webkit-transform: rotate(-1deg);
+  -moz-transform: rotate(-1deg);
+  -o-transform: rotate(-1deg);
+  transform: rotate(-1deg);
+}
+.point {
+  margin-top: 10px;
+}

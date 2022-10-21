@@ -28,7 +28,7 @@
   </div>
   {% endif %} {% if current_user.is_authenticated %}
   <div class="item">
-    <a href="{{url_for('profile')}}">
+    <a href="{{url_for('profile', user_id=current_user.id)}}">
       <div class="text">mypage</div>
     </a>
   </div>
