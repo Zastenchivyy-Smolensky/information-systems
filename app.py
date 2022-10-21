@@ -1,3 +1,4 @@
+from email.policy import default
 from flask import *
 app = Flask(__name__)
 from flask_sqlalchemy import SQLAlchemy
@@ -26,7 +27,9 @@ class Review(db.Model):
     review = db.Column(db.Integer, nullable=False)#レビュー
     point = db.Column(db.Integer, nullable=True)# 五段階評価
     pastImage = db.Column(db.String(100), nullable=False)#過去問ファイル
+    good_count = db.Column(db.Integer, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"),nullable=False)
+    good = False
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -37,6 +40,15 @@ class User(UserMixin, db.Model):
     comment = db.Column(db.String(1000))
     reivews = db.relationship("Review", backref="user",
                             lazy="dynamic", cascade="delete")
+
+class Good(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"),nullable=False)
+    review_id = db.Column(db.Integer, db.ForeignKey("review.id"))
+    user = db.relationship('User', backref=db.backref('good', lazy=True))
+    review = db.relationship('Review', backref=db.backref('good', lazy=True))
+    
+
 
 
 @login_manager.user_loader
@@ -128,7 +140,6 @@ def delete(id):
 #     }
 #     return jsonify(values=json.dumps(return_json))
 
-
 @app.route("/search", methods=['GET','POST'])
 def search():
     if request.method == "GET":
@@ -136,7 +147,11 @@ def search():
     if request.method == "POST":
         subject = request.form["subject"]
         review = Review.query.join(User).filter(Review.subject==subject).first().subject
-        return render_template("app/search.html", review=review)
+        if review:
+            return render_template("app/search.html", review=review)
+        else:
+            return render_template("app/search.html", review="データがありません")
+        # return jsonify(values=json.dumps(return_json))
 from auth import auth
 app.register_blueprint(auth)
 
@@ -150,7 +165,6 @@ def profile(user_id):
 def profile_edit(user_id):
     user = User.query.get(user_id)
     return render_template("app/profile_edit.html", user=user)
-
 
 @app.route("/profile/update/<int:user_id>", methods=["POST"])
 def profile_update(user_id):
@@ -167,3 +181,21 @@ def profile_update(user_id):
     db.session.commit()
     return redirect(url_for("profile",user_id=user.id))
 
+
+
+@app.route("/good", methods=["POST"])
+def good():
+    review_id = request.json["review_id"]
+    review = Review.query.filter_by(id=review_id).all()[0]
+    user_id = current_user.id
+    good = Good.query.filter_by(review_id=review_id, user_id=user_id).all()
+    if len(good)>=1:
+        db.session.delete(good[0])
+        review.good_count = review.good_count - 1
+    else:
+        good_user = Good(review_id=review_id, user_id=user_id)
+        db.session.add(good_user)
+        review.good_count = review.good_count+1
+    db.session.commit()
+    return str(review.good_count)
+    

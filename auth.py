@@ -16,10 +16,11 @@ def login():
         password = request.form.get("password")
         remember = True if request.form.get("remember") else False
         user = User.query.filter_by(email=email).first()
+        print(user.id)
         if not user or not check_password_hash(user.password, password):
             return redirect(url_for("auth.login"))
         login_user(user, remember=remember)
-        return redirect(url_for('profile'))
+        return redirect(url_for("profile", user_id=user.id))
 
 @auth.route("/signup" ,methods=["GET","POST"])
 def signup():
@@ -36,6 +37,7 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for("auth.login"))
+        
 @auth.route("/logout")
 def logout():
     logout_user()
