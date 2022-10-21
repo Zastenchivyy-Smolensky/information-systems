@@ -1,7 +1,7 @@
 addEventListener("load", function () {
-  const src1 = "static/images/69681.jpg";
-  const src2 = "static/images/69678.jpg";
-  const src3 = "static/images/04.png";
+  const src1 = "static/images/01.jpg";
+  const src2 = "static/images/02.jpg";
+  const src3 = "static/images/03.png";
   const img_src = [src1, src2, src3];
   const menu = document.querySelectorAll(".js-menu");
   let num = -1;
