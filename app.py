@@ -64,7 +64,7 @@ def index():
     if review_input is None or len(review_input) == 0:
         reviews = Review.query.join(User).all()
     else: 
-        reviews = db.session.query(Review).filter(or_(Review.subject.like(review_input), Review.teacher.like(review_input),Review.user_id.like(review_input))).all()
+        reviews = db.session.query(Review).filter(or_(Review.subject.like(review_input), Review.teacher.like(review_input))).all()
 
     return render_template("base.html", reviews=reviews)
 
