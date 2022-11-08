@@ -6,6 +6,8 @@ from flask_login import UserMixin,LoginManager,login_required, current_user
 from werkzeug.security import generate_password_hash
 import os
 import secrets
+from sqlalchemy import or_
+
 app.config["SECRET_KEY"]=secrets.token_hex(16)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///review.db'
 app.config["SECRET_KEY"]=os.urandom(24)
@@ -58,7 +60,12 @@ def load_user(user_id):
 
 @app.route("/",methods=["GET","POST"])
 def index():
-    reviews = Review.query.join(User).all()
+    review_input = request.args.get("search")
+    if review_input is None or len(review_input) == 0:
+        reviews = Review.query.join(User).all()
+    else: 
+        reviews = db.session.query(Review).filter(or_(Review.subject.like(review_input), Review.teacher.like(review_input),Review.user_id.like(review_input))).all()
+
     return render_template("base.html", reviews=reviews)
 
 @app.route("/add", methods=["POST"])
@@ -127,31 +134,7 @@ def delete(id):
     db.session.commit()
     return redirect(url_for("index"))
 
-# @app.route("/search",methods=["POST"])
-# def search():
-#     item = request.form["item"]
-#     items = [("キャベツ",200),("にんじん",100),("牛乳",178),("もやし",50)]
-#     price="未登録"
-#     for row in items:
-#         if row[0] == item:
-#             price = str(row[1])+"円"
-#     return_json={
-#         "message":'<p>「{0}」は{1}です。</p>'.format(item, price)
-#     }
-#     return jsonify(values=json.dumps(return_json))
 
-@app.route("/search", methods=['GET','POST'])
-def search():
-    if request.method == "GET":
-        return render_template("app/search.html")
-    if request.method == "POST":
-        subject = request.form["subject"]
-        review = Review.query.join(User).filter(Review.subject==subject).first().subject
-        if review:
-            return render_template("app/search.html", review=review)
-        else:
-            return render_template("app/search.html", review="データがありません")
-        # return jsonify(values=json.dumps(return_json))
 from auth import auth
 app.register_blueprint(auth)
 

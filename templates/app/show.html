@@ -43,7 +43,7 @@
       <p class = "use_name">ユーザ名:{{review.user.name}}</p>
       {% if current_user.is_authenticated %}
       {% if review.good %}
-        <i class="far fa-heart good-btn good-btn-active" data-review_id="{{review.id}}"></i>
+        <i class="far fa-heart good-btn good-btn-active" data-review_id="{{review.id}}"></i><br>
       {% else %}
         <i class="far fa-heart good-btn" data-review_id="{{review.id}}"></i>
       {% endif %}
@@ -52,7 +52,6 @@
     </div>
   </body>
 </html>
-<script src="{{url_for('static', filename='javascript/modal.js')}}"></script>
 <script src="{{url_for('static', filename='javascript/good.js')}}"></script>
 </body>
 </html>
