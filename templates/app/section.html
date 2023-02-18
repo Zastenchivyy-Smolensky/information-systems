@@ -11,18 +11,12 @@
             <i class="fa-solid fa-magnifying-glass"></i>
             <p class="menu js-menu">絞り込み</p>
             <div class="contents">
-              <!-- <div id="search1"> -->
-                <!-- <form action="search" method="POST">
-                  <input id="search2" type="text" name="subject">
-                  <input class="btn2" type="submit" value="検索">
-                </form> -->
                <div class="search">
                 <form>
-                  <input type="text" name="search">
+                  <input type="text" name="search" placeholder="教員名">
                   <input type="submit" value="検索">
                 </form>
                </div>
-              <!-- </div> -->
             </div>
           </div>
           <span id="midashi"></span>
@@ -71,7 +65,10 @@
           </div>
         </section>
       </div>
-      <div class="content1" data-content="1">content1</div>
+      <div class="content1" data-content="1">
+        {% include
+          "app/graph.html" %}
+      </div>
     </div>
   </div>
 </div>

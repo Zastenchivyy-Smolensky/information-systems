@@ -7,14 +7,6 @@ from werkzeug.security import generate_password_hash
 import os
 import secrets
 from sqlalchemy import or_
-import sqlite3 
-import pandas as pd
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_agg import FigureCanvasAgg
-from matplotlib.figure import Figure
-import urllib
-from io import BytesIO
-
 
 app.config["SECRET_KEY"]=secrets.token_hex(16)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///review.db'
@@ -76,22 +68,6 @@ def index():
 
     return render_template("base.html", reviews=reviews)
 
-@app.route("/graph", methods=["GET"])
-def graph():
-    dbname="review.db"
-    print("hello world")
-    connection = sqlite3.connect(dbname)
-    cur = connection.cursor()
-    sql1 = "SELECT * from review"
-    cur = cur.execute(sql1)
-    result = cur.fetchall()
-    df = pd.DataFrame(result,columns=["id","subject","teacher","day","time","review", "point","pastImage", "good_count","user_id"])
-    print(df)
-    teacher=df.teacher
-    df = [teacher]
-    df = str(df)
-    return render_template("app/graph.html",df=df)
-
 @app.route("/add", methods=["POST"])
 @login_required
 def add():
@@ -120,9 +96,6 @@ def add():
         db.session.commit()
         flash("投稿しました")
         return redirect(url_for("index"))
-
-
-
 
 @app.route("/show/<int:id>")
 def show(id):
@@ -192,6 +165,9 @@ def profile_update(user_id):
     return redirect(url_for("profile",user_id=user.id))
 
 
+@app.route("/graph", method=["GET"])
+def graph():
+    
 
 @app.route("/good", methods=["POST"])
 def good():
