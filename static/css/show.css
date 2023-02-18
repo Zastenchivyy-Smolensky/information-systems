@@ -130,12 +130,3 @@ h2:after {
 .point {
   margin-top: 10px;
 }
-.good-btn:hover {
-  color: pink;
-  font-size: 1.1em;
-  cursor: pointer;
-}
-
-.good-btn-active {
-  color: red;
-}
