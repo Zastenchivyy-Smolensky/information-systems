@@ -9,11 +9,12 @@ import secrets
 from sqlalchemy import or_
 import sqlite3 
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_agg import FigureCanvasAgg
-from matplotlib.figure import Figure
-import urllib
-from io import BytesIO
+import matplotlib
+matplotlib.use('agg')
+
+
 
 
 app.config["SECRET_KEY"]=secrets.token_hex(16)
@@ -76,21 +77,23 @@ def index():
 
     return render_template("base.html", reviews=reviews)
 
-@app.route("/graph", methods=["GET"])
-def graph():
-    dbname="review.db"
-    print("hello world")
+@app.route("/graph")
+def chart_do():
+    dbname = "review.db"
     connection = sqlite3.connect(dbname)
     cur = connection.cursor()
-    sql1 = "SELECT * from review"
-    cur = cur.execute(sql1)
-    result = cur.fetchall()
-    df = pd.DataFrame(result,columns=["id","subject","teacher","day","time","review", "point","pastImage", "good_count","user_id"])
-    print(df)
-    teacher=df.teacher
-    df = [teacher]
-    df = str(df)
-    return render_template("app/graph.html",df=df)
+    sql1 = "SELECT teacher,point from review"
+    result = cur.execute(sql1)
+    graph_data=[{"x":row[0],"y":row[1]} for row in result]
+    return jsonify(graph_data)
+    # plt.plot(y_data)
+    # plt.xlabel("X軸")
+    # plt.ylabel("Y軸")
+    # plt.title("graph")
+    # plt.savefig("static/graph.png")
+    # graph_image="static/graph.png"
+    # return render_template("app/graph.html", graph_image=graph_image)
+
 
 @app.route("/add", methods=["POST"])
 @login_required

@@ -66,8 +66,36 @@
         </section>
       </div>
       <div class="content1" data-content="1">
-        {% include
-          "app/graph.html" %}
+        <canvas id="chart"></canvas>
+        <script>
+          fetch("/graph")
+            .then((response) => response.json())
+            .then((data) => {
+              var ctx = document.getElementById("chart").getContext("2d");
+              new Chart(ctx, {
+                type: "bar",
+                data: {
+                  labels: data.map((item) => item.x),
+                  datasets: [
+                    {
+                      label: "評価",
+                      data: data.map((item) => item.y),
+                      backgroundColor: "rgba(75, 192, 192, 0.2)",
+                      borderColor: "rgba(75, 192, 192, 1)",
+                      borderWidth: 1,
+                    },
+                  ],
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                    },
+                  },
+                },
+              });
+            });
+        </script>
       </div>
     </div>
   </div>
