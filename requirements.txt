@@ -2,3 +2,4 @@ gunicorn==19.9.0
 flask==2.2.2
 flask-sqlalchemy==3.0.2
 flask_login
+matplotlib
