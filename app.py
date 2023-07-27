@@ -162,8 +162,8 @@ def delete(id):
     return redirect(url_for("index"))
 
 
-import auth
-app.register_blueprint(auth)
+# import auth
+# app.register_blueprint(auth)
 
 @app.route("/profile/<int:user_id>")
 @login_required
