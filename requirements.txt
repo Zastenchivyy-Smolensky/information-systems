@@ -2,8 +2,3 @@ gunicorn==19.9.0
 flask==2.0.1
 flask_sqlalchemy
 flask_login
-os
-secrets
-sqlalchemy
-sqlite3
-matplotlib
